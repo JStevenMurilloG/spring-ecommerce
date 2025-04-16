@@ -1,12 +1,17 @@
 package co.proyectos.ecommerce.springecommerce.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Usuario {
+@Table(name = "Usuarios")
+public class Usuario{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
     private String nombre;
     private String userName;
@@ -15,6 +20,13 @@ public class Usuario {
     private String telefono;
     private String tipo;
     private String password;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> listaOrdenes;
+
 
     public Usuario() {
     }
@@ -92,6 +104,22 @@ public class Usuario {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public List<Orden> getListaOrdenes() {
+        return listaOrdenes;
+    }
+
+    public void setListaOrdenes(List<Orden> listaOrdenes) {
+        this.listaOrdenes = listaOrdenes;
     }
 
     @Override

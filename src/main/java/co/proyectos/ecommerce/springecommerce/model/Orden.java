@@ -1,15 +1,28 @@
 package co.proyectos.ecommerce.springecommerce.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name= "Ordenes")
 public class Orden {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrden;
     private String numero;
     private Date fechaCreacion;
     private Date fechaRecibido;
 
     private double totalOrden;
+
+    @ManyToOne
+    private Usuario usuario;
+
+    @OneToOne(mappedBy="orden")
+    private DetalleOrden detalleOrden;
+
 
     public Orden() {
     }
@@ -62,6 +75,14 @@ public class Orden {
         this.totalOrden = totalOrden;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public String toString() {
         return "Orden{" +
@@ -71,5 +92,13 @@ public class Orden {
                 ", fechaRecibido=" + fechaRecibido +
                 ", totalOrden=" + totalOrden +
                 '}';
+    }
+
+    public DetalleOrden getDetalleOrden() {
+        return detalleOrden;
+    }
+
+    public void setDetalleOrden(DetalleOrden detalleOrden) {
+        this.detalleOrden = detalleOrden;
     }
 }
